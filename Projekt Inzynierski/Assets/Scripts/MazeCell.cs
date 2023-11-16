@@ -46,5 +46,4 @@ public class MazeCell : MonoBehaviour
     {
         _wallRight.SetActive(false);
     }
-
 }
