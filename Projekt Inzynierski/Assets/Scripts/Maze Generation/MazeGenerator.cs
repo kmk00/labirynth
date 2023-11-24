@@ -9,15 +9,17 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private MazeCell _cellPref;
     [SerializeField]
+    private MazeCell _startCell;
+    [SerializeField]
+    private MazeCell _endCell;
+    [SerializeField]
     private int _mazeWidth;
     [SerializeField]
     private int _mazeHeight;
 
     private MazeCell[,] _mazeGrid;
-    private Stack<MazeCell> _mazeCellsStact = new Stack<MazeCell>();
     
 
-    // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
@@ -32,7 +34,9 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < _mazeHeight; j++)
             {
-                _mazeGrid[i, j] = Instantiate(_cellPref, new Vector3(i, 0, j), Quaternion.identity);
+                if(i== 0 && j == 0) _mazeGrid[i, j] = Instantiate(_endCell, new Vector3(i, 0, j), Quaternion.identity); // End cell wybieram jakio pierwsze, zeby miec pewnosc ze niszczymy tylko jedna sciane na tym kafelku
+                else if (i == _mazeWidth - 1 && j == _mazeHeight - 1) _mazeGrid[i, j] = Instantiate(_startCell, new Vector3(i, 0, j), Quaternion.identity);
+                else _mazeGrid[i, j] = Instantiate(_cellPref, new Vector3(i, 0, j), Quaternion.identity);
             }
         }
     }

@@ -209,8 +209,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49728146, y: -0.03899857, z: 0.02238314, w: 0.8664233}
-  m_LocalPosition: {x: -0.00000017856016, y: 25.81, z: -10}
+  m_LocalRotation: {x: 0.4981221, y: 0.50194216, z: -0.49863485, w: 0.5012901}
+  m_LocalPosition: {x: 13.8189125, y: 30.579187, z: 13.691147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -473,8 +473,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cellPref: {fileID: 2472250353459992722, guid: 6e95bb53c1ae4eb49af20712574c6b64,
     type: 3}
-  _width: 20
-  _height: 20
+  _startCell: {fileID: 5933990187875259761, guid: 46c8a40ca7589554ebeb02756509dc13,
+    type: 3}
+  _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
+    type: 3}
+  _mazeWidth: 30
+  _mazeHeight: 30
 --- !u!1 &1314867023
 GameObject:
   m_ObjectHideFlags: 0
