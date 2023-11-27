@@ -16,6 +16,9 @@ public class MazeGenerator : MonoBehaviour
     private int _mazeWidth;
     [SerializeField]
     private int _mazeHeight;
+    [SerializeField]
+    private GameObject _player;
+
 
     private MazeCell[,] _mazeGrid;
     
@@ -24,8 +27,13 @@ public class MazeGenerator : MonoBehaviour
     {
         GenerateGrid();
         GenerateMaze(null, _mazeGrid[0, 0]);
+        InstantiatePlayer();
     }
 
+    private void InstantiatePlayer()
+    {
+        Instantiate(_player, new Vector3(_mazeHeight-1, 1, _mazeWidth-1), Quaternion.identity);
+    }
 
     private void GenerateGrid()
     {
