@@ -4,12 +4,17 @@ using System.Globalization;
 
 public class Timer : MonoBehaviour
 {
-    [Header("Component")]
-    public TextMeshProUGUI timerText;
+    private GameObject timer;
+    private TextMeshProUGUI timerText;
 
     private bool isTiming = false;
     private float elapsedTime = 0f;
 
+    private void Start()
+    {
+        timer = GameObject.Find("Timer");
+        timerText = timer.GetComponent<TextMeshProUGUI>();
+    }
     void Update()
     {
         if (isTiming)

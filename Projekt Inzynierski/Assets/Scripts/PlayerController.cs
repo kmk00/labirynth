@@ -1,16 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5.0f;
-    
-    public Timer timer;
+
+    //public GameObject timer;
+    private Timer time;
 
     private void Start()
     {
-
-        timer = GetComponent<Timer>();
+        time = GetComponent<Timer>();
     }
 
     void Update()
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("EndCell"))
         {
             Debug.Log("Finish");
-            timer.StopStopwatch();
+            time.StopStopwatch();
         }
 
     }
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("StartCell"))
         {
             Debug.Log("Start");
-            timer.StartStopwatch();
+            time.StartStopwatch();
         }
     }
 
