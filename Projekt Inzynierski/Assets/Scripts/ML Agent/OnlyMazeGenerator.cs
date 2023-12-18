@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OnlyMazeGenerator : MonoBehaviour
@@ -71,17 +72,37 @@ public class OnlyMazeGenerator : MonoBehaviour
                 if (i == 0 || i == _mazeWidth - 1 || j == 0 || j == _mazeHeight - 1)
                 {
                     //Outsidewall rozwiazuje problem z triggerem colliderow sciany 
-                    TagChildObjects(cell, "OutsideWall");
+                    TagChildObjects(cell,i,j);
                 }
+                
             }
         }
     }
 
-    private void TagChildObjects(MazeCell parent, string tag)
+    private void TagChildObjects(MazeCell parent,int i, int j)
     {
         foreach (Transform child in parent.transform)
         {
-            child.gameObject.tag = tag;
+            if (i == 0 && child.gameObject.name == "Left Wall")
+            {
+                child.gameObject.tag = "OutsideWall";
+            }
+            if (i == 0 && child.gameObject.name == "Front Wall")
+            {
+                child.gameObject.tag = "OutsideWall";
+            }
+            if (j == 0 && child.gameObject.name == "Back Wall")
+            {
+                child.gameObject.tag = "OutsideWall";
+            }
+            if (i == _mazeWidth - 1 && child.gameObject.name == "Right Wall")
+            {
+                child.gameObject.tag = "OutsideWall";
+            }
+            if (j == _mazeHeight - 1 && child.gameObject.name == "Front Wall")
+            {
+                child.gameObject.tag = "OutsideWall";
+            }
         }
     }
 

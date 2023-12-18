@@ -81,22 +81,7 @@ public class FindDestination : Agent
     private void OnTriggerEnter(Collider other)
     {
 
-        switch (other.gameObject.name)
-        {
-            case "Back Wall":
-                Debug.Log("Back Wall"); 
-                break;
-            case "Front Wall":
-                Debug.Log("F Wall");
-                break;
-            case "Right Wall":
-                Debug.Log("R Wall");
-                break;
-            case "Left Wall":
-                Debug.Log("L Wall");
-                break;
-
-        }
+        Debug.Log(other.gameObject.tag);
 
         if (hasCollided) return;
 
@@ -104,14 +89,19 @@ public class FindDestination : Agent
         {
 
             SetReward(1f);
-            DestroyElements();           
+            DestroyElements();
             Debug.Log("End Found");
             EndEpisode();
         }
-        if (other.TryGetComponent<Wall>(out Wall wall))
+        if (other.CompareTag("OutsideWall"))
         {
             SetReward(-1f);
             hasCollided = true;
+            EndEpisode();
+        }
+        if (other.CompareTag("InnerWall"))
+        {
+            SetReward(-.5f);
             EndEpisode();
         }
     }

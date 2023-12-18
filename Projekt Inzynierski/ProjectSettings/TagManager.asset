@@ -8,6 +8,9 @@ TagManager:
   - EndCell
   - StartCell
   - Wall
+  - OutsideWall
+  - InnerWall
+  - InnerCell
   layers:
   - Default
   - TransparentFX
