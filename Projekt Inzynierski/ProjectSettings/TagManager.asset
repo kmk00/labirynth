@@ -7,6 +7,7 @@ TagManager:
   - Timer
   - EndCell
   - StartCell
+  - Wall
   layers:
   - Default
   - TransparentFX
