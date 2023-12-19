@@ -16,6 +16,8 @@ public class FindDestination : Agent
     private Vector3 startingCellPos;
     private GameObject[] wallsPrefabs;
     private bool hasCollided = false;
+    private float collisionCooldown = 0.5f; // 0.5 seconds cooldown
+    private float lastCollisionTime = -1f;
 
     public override void OnEpisodeBegin()
     {
@@ -81,9 +83,11 @@ public class FindDestination : Agent
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log(other.gameObject.tag);
 
-        if (hasCollided) return;
+        if (Time.time - lastCollisionTime < collisionCooldown)
+            return; // Skip if we are in cooldown
+
+        Debug.Log(other.gameObject.tag);
 
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
@@ -93,15 +97,11 @@ public class FindDestination : Agent
             Debug.Log("End Found");
             EndEpisode();
         }
-        if (other.CompareTag("OutsideWall"))
+        
+        if (other.CompareTag("OutsideWall") || other.CompareTag("InnerWall"))
         {
             SetReward(-1f);
-            hasCollided = true;
-            EndEpisode();
-        }
-        if (other.CompareTag("InnerWall"))
-        {
-            SetReward(-.5f);
+            lastCollisionTime = Time.time; // Update last collision time
             EndEpisode();
         }
     }
