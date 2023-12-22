@@ -53,8 +53,6 @@ public class OnlyMazeGenerator : MonoBehaviour
             Debug.LogError("Selected corner cell is null. Maze generation failed.");
         }
 
-
-
     }
 
 
@@ -78,11 +76,6 @@ public class OnlyMazeGenerator : MonoBehaviour
 
 
                 _mazeGrid[i, j] = cell;
-
-                if (_mazeGrid[i, j] == null)
-                {
-                    Debug.LogError($"Failed to instantiate MazeCell at [{i}, {j}].");
-                }
 
                 cell.transform.localPosition = new Vector3(i - _mazeWidth / 2, 0, j - _mazeHeight / 2);
 
