@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 1304670171344669690, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.037
+      value: -6.133
       objectReference: {fileID: 0}
     - target: {fileID: 1304670171344669690, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
@@ -184,7 +184,7 @@ PrefabInstance:
     - target: {fileID: 2890115953476714515, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
       propertyPath: MaxStep
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2890115953476714515, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
@@ -192,10 +192,35 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 326346931310760141, guid: ece2dc7562800ee4bbab63baf8e17536,
         type: 3}
+    - target: {fileID: 3011376424555906139, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3719970055006492854, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
       propertyPath: m_RaysPerDirection
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719970055006492854, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      propertyPath: m_DetectableTags.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719970055006492854, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      propertyPath: m_DetectableTags.Array.data[0]
+      value: InnerWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719970055006492854, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      propertyPath: m_DetectableTags.Array.data[1]
+      value: OutsideWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719970055006492854, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      propertyPath: m_DetectableTags.Array.data[2]
+      value: EndCell
       objectReference: {fileID: 0}
     - target: {fileID: 6762858091210853507, guid: 273550e93c124044f9a3e1e82af535ff,
         type: 3}
@@ -205,7 +230,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6762858091210853507, guid: 273550e93c124044f9a3e1e82af535ff,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531331715}
   m_SourcePrefab: {fileID: 100100000, guid: 273550e93c124044f9a3e1e82af535ff, type: 3}
 --- !u!1 &1194535849
 GameObject:
@@ -344,6 +373,28 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &1531331705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6762858091210853507, guid: 273550e93c124044f9a3e1e82af535ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 988702678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1531331715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531331705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 1
+  NumStepsToRecord: 0
+  DemonstrationName: PrawoLewo
+  DemonstrationDirectory: Demos
 --- !u!1 &1736806497
 GameObject:
   m_ObjectHideFlags: 0

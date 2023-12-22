@@ -17,15 +17,16 @@ public class OnlyMazeGenerator : MonoBehaviour
     private int _mazeWidth;
     [SerializeField]
     private int _mazeHeight;
-    [SerializeField]
-    private GameObject _player;
-
+    
+    
+    private GameObject environmentParent;
 
     private MazeCell[,] _mazeGrid;
     
 
     void Start()
     {
+        
 
         Vector2Int[] corners = new Vector2Int[]{
             new Vector2Int(0, 0),
@@ -37,22 +38,30 @@ public class OnlyMazeGenerator : MonoBehaviour
         Vector2Int selectedCorner = corners[Random.Range(0, corners.Length)]; // Destination Corner
         Vector2Int oppositeCorner = new Vector2Int(_mazeWidth - 1 - selectedCorner.x, _mazeHeight - 1 - selectedCorner.y); //Player Spawn Corner
 
+        environmentParent = transform.parent.gameObject;
+
+        Debug.Log("Parent Name: " + environmentParent.name);
 
         GenerateGrid(selectedCorner, oppositeCorner);
 
-        GenerateMaze(null, _mazeGrid[selectedCorner.x, selectedCorner.y]);
-        //InstantiatePlayer(oppositeCorner);
+        if (_mazeGrid[selectedCorner.x, selectedCorner.y] != null)
+        {
+            GenerateMaze(null, _mazeGrid[selectedCorner.x, selectedCorner.y]);
+        }
+        else
+        {
+            Debug.LogError("Selected corner cell is null. Maze generation failed.");
+        }
+
+
+
     }
 
-    private void InstantiatePlayer(Vector2Int oppositeCorner)
-    {
-        Instantiate(_player, new Vector3(oppositeCorner.x, 1, oppositeCorner.y), Quaternion.identity);
-    }
 
     private void GenerateGrid(Vector2Int selectedCorner, Vector2Int oppositeCorner)
     {
-
         _mazeGrid = new MazeCell[_mazeWidth, _mazeHeight];
+
 
         for (int i = 0; i < _mazeWidth; i++)
         {
@@ -60,24 +69,31 @@ public class OnlyMazeGenerator : MonoBehaviour
             {
                 MazeCell cell;
                 if (i == selectedCorner.x && j == selectedCorner.y)
-                    cell = Instantiate(_endCell, new Vector3(i, 0, j), Quaternion.identity);
+                    cell = Instantiate(_endCell, new Vector3(i, 0, j), Quaternion.identity, environmentParent.transform);
                 else if (i == oppositeCorner.x && j == oppositeCorner.y)
-                    cell = Instantiate(_startCell, new Vector3(i, 0, j), Quaternion.identity);
+                    cell = Instantiate(_startCell, new Vector3(i, 0, j), Quaternion.identity, environmentParent.transform);
                 else
-                    cell = Instantiate(_cellPref, new Vector3(i, 0, j), Quaternion.identity);
+                    cell = Instantiate(_cellPref, new Vector3(i, 0, j), Quaternion.identity, environmentParent.transform);
+
+
 
                 _mazeGrid[i, j] = cell;
 
+                if (_mazeGrid[i, j] == null)
+                {
+                    Debug.LogError($"Failed to instantiate MazeCell at [{i}, {j}].");
+                }
+
+                cell.transform.localPosition = new Vector3(i - _mazeWidth / 2, 0, j - _mazeHeight / 2);
 
                 if (i == 0 || i == _mazeWidth - 1 || j == 0 || j == _mazeHeight - 1)
                 {
-                    //Outsidewall rozwiazuje problem z triggerem colliderow sciany 
-                    TagChildObjects(cell,i,j);
+                   TagChildObjects(cell, i, j);
                 }
-                
             }
         }
     }
+
 
     private void TagChildObjects(MazeCell parent,int i, int j)
     {
@@ -134,14 +150,15 @@ public class OnlyMazeGenerator : MonoBehaviour
 
     private IEnumerable<MazeCell> GetUnvisitedCells(MazeCell currentCell)
     {
-        int x = (int)currentCell.transform.position.x;
-        int z = (int)currentCell.transform.position.z;
+        // Adjusting for the offset used in GenerateGrid
+        int x = Mathf.RoundToInt(currentCell.transform.localPosition.x + _mazeWidth / 2);
+        int z = Mathf.RoundToInt(currentCell.transform.localPosition.z + _mazeHeight / 2);
 
+        // Check each direction, ensuring indices are within the bounds of the grid
         if (x + 1 < _mazeWidth)
         {
             var cellToRight = _mazeGrid[x + 1, z];
-
-            if (cellToRight.IsVisited == false)
+            if (!cellToRight.IsVisited)
             {
                 yield return cellToRight;
             }
@@ -150,8 +167,7 @@ public class OnlyMazeGenerator : MonoBehaviour
         if (x - 1 >= 0)
         {
             var cellToLeft = _mazeGrid[x - 1, z];
-
-            if (cellToLeft.IsVisited == false)
+            if (!cellToLeft.IsVisited)
             {
                 yield return cellToLeft;
             }
@@ -160,8 +176,7 @@ public class OnlyMazeGenerator : MonoBehaviour
         if (z + 1 < _mazeHeight)
         {
             var cellToFront = _mazeGrid[x, z + 1];
-
-            if (cellToFront.IsVisited == false)
+            if (!cellToFront.IsVisited)
             {
                 yield return cellToFront;
             }
@@ -170,13 +185,13 @@ public class OnlyMazeGenerator : MonoBehaviour
         if (z - 1 >= 0)
         {
             var cellToBack = _mazeGrid[x, z - 1];
-
-            if (cellToBack.IsVisited == false)
+            if (!cellToBack.IsVisited)
             {
                 yield return cellToBack;
             }
         }
     }
+
 
     private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
@@ -185,28 +200,31 @@ public class OnlyMazeGenerator : MonoBehaviour
             return;
         }
 
-        if (previousCell.transform.position.x < currentCell.transform.position.x)
+        Vector3 prevLocalPos = previousCell.transform.localPosition;
+        Vector3 currLocalPos = currentCell.transform.localPosition;
+
+        if (prevLocalPos.x < currLocalPos.x)
         {
             previousCell.ClearRight();
             currentCell.ClearLeft();
             return;
         }
 
-        if (previousCell.transform.position.x > currentCell.transform.position.x)
+        if (prevLocalPos.x > currLocalPos.x)
         {
             previousCell.ClearLeft();
             currentCell.ClearRight();
             return;
         }
 
-        if (previousCell.transform.position.z < currentCell.transform.position.z)
+        if (prevLocalPos.z < currLocalPos.z)
         {
             previousCell.ClearFront();
             currentCell.ClearBack();
             return;
         }
 
-        if (previousCell.transform.position.z > currentCell.transform.position.z)
+        if (prevLocalPos.z > currLocalPos.z)
         {
             previousCell.ClearBack();
             currentCell.ClearFront();

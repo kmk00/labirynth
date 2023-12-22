@@ -11,6 +11,9 @@ TagManager:
   - OutsideWall
   - InnerWall
   - InnerCell
+  - Unvisited
+  - Visited
+  - Point
   layers:
   - Default
   - TransparentFX

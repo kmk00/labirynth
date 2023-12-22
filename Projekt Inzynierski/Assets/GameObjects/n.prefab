@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 418115833000358052}
   - component: {fileID: 8742523053551028413}
   m_Layer: 0
-  m_Name: TrainingMazeOnly
+  m_Name: n
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
