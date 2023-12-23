@@ -225,4 +225,9 @@ public class OnlyMazeGenerator : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        
+    }
+
 }
