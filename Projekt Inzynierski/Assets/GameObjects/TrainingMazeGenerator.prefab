@@ -50,7 +50,5 @@ MonoBehaviour:
     type: 3}
   _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
     type: 3}
-  _mazeWidth: 8
-  _mazeHeight: 4
-  _player: {fileID: 0}
-  environmentParent: {fileID: 0}
+  _mazeWidth: 3
+  _mazeHeight: 3

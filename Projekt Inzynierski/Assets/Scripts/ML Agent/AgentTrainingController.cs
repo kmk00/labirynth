@@ -11,18 +11,34 @@ public class AgentTrainingController : Agent
     private GameObject mazeGeneratorObject;
     [SerializeField]
     private GameObject environmentParentGameObject;
+    [SerializeField]
+    private float moveSpeed = 4f;
 
     private GameObject currentMazeInstance;
     private GameObject startingCell;
     private GameObject endCell;
     private Vector3 startingCellPos;
     private Vector3 endingCellPos;
+
     private float lastCollisionTime = -1f;
     private float collisionCooldown = 0.5f;
     private GameObject[] wallsPrefabs;
+
+    private Rigidbody rb;
+
+    private List<GameObject> disabledPoints = new List<GameObject>();
+
+
+
+
+
+    public override void Initialize()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     public override void OnEpisodeBegin()
     {
-        Debug.Log("EpisodeBegin");
 
         if (currentMazeInstance == null)
         {
@@ -36,20 +52,24 @@ public class AgentTrainingController : Agent
         StartCoroutine(InitializeStartPosition());
 
 
+
+
     }
 
 
     public override void CollectObservations(VectorSensor sensor)
     {
 
-        endCell = FindChildWithTag(environmentParentGameObject, "EndCell");
+        //endCell = FindChildWithTag(environmentParentGameObject, "EndCell");
         
-        if(endCell != null)
-        {
-            endingCellPos = endCell.transform.localPosition;
-            sensor.AddObservation(endingCellPos);
+        //Usunac target position i zmienic ilosc obserwacji
 
-        }
+        //if(endCell != null)
+       // {
+        //    endingCellPos = endCell.transform.localPosition;
+        //    sensor.AddObservation(endingCellPos);
+
+       // }
 
         sensor.AddObservation(transform.localPosition);
 
@@ -57,11 +77,17 @@ public class AgentTrainingController : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float moveX = actions.ContinuousActions[0];
-        float moveZ = actions.ContinuousActions[1];
+        float moveRotate = actions.ContinuousActions[0];
+        float moveForward = actions.ContinuousActions[1];
 
-        float moveSpeed = .7f;
-        transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
+        transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
+
+        /*
+        Vector3 velocity = new Vector3(moveX,0f,moveZ);
+        velocity = velocity.normalized * Time.deltaTime * moveSpeed;
+        transform.localPosition += velocity;
+         */
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -80,7 +106,17 @@ public class AgentTrainingController : Agent
         {
             
             lastCollisionTime = Time.time; // Update last collision time
+            SetReward(-10f);
+            ResetDisabledPoints();
             EndEpisode();
+        }
+
+        if (other.CompareTag("Point"))
+        {
+
+            SetReward(1f);
+            disabledPoints.Add(other.gameObject);
+            other.gameObject.SetActive(false);
         }
 
         if (other.TryGetComponent<Goal>(out Goal goal))
@@ -89,7 +125,7 @@ public class AgentTrainingController : Agent
             SetReward(50f);
             DestroyMazeElementsExceptTag(environmentParentGameObject,"Agent");
             currentMazeInstance = null;
-            Debug.Log("End Found");
+            disabledPoints.Clear();
             EndEpisode();
         }
 
@@ -97,6 +133,15 @@ public class AgentTrainingController : Agent
 
     //-----------------------------------------------------------------------------------------
 
+
+    private void ResetDisabledPoints()
+    {
+        foreach (var point in disabledPoints)
+        {
+            point.SetActive(true);
+        }
+        disabledPoints.Clear();
+    }
 
     private void DestroyMazeElementsExceptTag(GameObject parent, string tag)
     {
@@ -110,35 +155,20 @@ public class AgentTrainingController : Agent
 
     }
 
-    
-
-
     private IEnumerator InitializeStartPosition()
     {
         yield return null;
 
         startingCell = FindChildWithTag(environmentParentGameObject, "StartCell");
 
-        if (startingCell!= null)
-        {
-            // Child with the specified tag is found
-            Debug.Log("Found child: " + startingCell.name);
-        }
-        else
-        {
-            // Child with the specified tag is not found
-            Debug.Log("No child with the specified tag found.");
-        }
-
         if (startingCell != null)
         {
             startingCellPos = startingCell.transform.localPosition;
-            transform.localPosition = new Vector3(startingCellPos.x, .7f, startingCellPos.z);
+            transform.localPosition = new Vector3(startingCellPos.x, .4f, startingCellPos.z);
+            rb.angularVelocity = Vector3.zero; 
+            rb.velocity = Vector3.zero;
+            transform.rotation = Quaternion.identity;
 
-        }
-        else
-        {
-            Debug.LogError("StartCell with the tag 'StartCell' not found.");
         }
     }
 

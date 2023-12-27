@@ -15,6 +15,7 @@ TagManager:
   - Visited
   - Point
   - Env
+  - Agent
   layers:
   - Default
   - TransparentFX
