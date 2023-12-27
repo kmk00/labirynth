@@ -13,6 +13,20 @@ public class AgentTrainingController : Agent
     private GameObject environmentParentGameObject;
     [SerializeField]
     private float moveSpeed = 4f;
+    [SerializeField]
+    private float timeForEp;
+    [SerializeField]
+    private float pointReactivationTime = 5f;
+
+    //Rewards
+    [SerializeField]
+    private float wallReward;
+    [SerializeField]
+    private float pointReward;
+    [SerializeField]
+    private float timePenaltyReward;
+    [SerializeField]
+    private float goalReward;
 
     private GameObject currentMazeInstance;
     private GameObject startingCell;
@@ -21,20 +35,27 @@ public class AgentTrainingController : Agent
     private Vector3 endingCellPos;
 
     private float lastCollisionTime = -1f;
-    private float collisionCooldown = 0.5f;
+    private float collisionCooldown = 0.4f;
     private GameObject[] wallsPrefabs;
 
     private Rigidbody rb;
+    private Renderer agentRenderer;
 
     private List<GameObject> disabledPoints = new List<GameObject>();
 
-
+    private float timeLeft;
 
 
 
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody>();
+        agentRenderer = GetComponent<Renderer>();
+    }
+
+    private void Update()
+    {
+        CheckRemainingTime();
     }
 
     public override void OnEpisodeBegin()
@@ -50,6 +71,7 @@ public class AgentTrainingController : Agent
 
 
         StartCoroutine(InitializeStartPosition());
+        EpisodeTimerNew();
 
 
 
@@ -59,17 +81,6 @@ public class AgentTrainingController : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
-        //endCell = FindChildWithTag(environmentParentGameObject, "EndCell");
-        
-        //Usunac target position i zmienic ilosc obserwacji
-
-        //if(endCell != null)
-       // {
-        //    endingCellPos = endCell.transform.localPosition;
-        //    sensor.AddObservation(endingCellPos);
-
-       // }
 
         sensor.AddObservation(transform.localPosition);
 
@@ -83,11 +94,7 @@ public class AgentTrainingController : Agent
         rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
         transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
 
-        /*
-        Vector3 velocity = new Vector3(moveX,0f,moveZ);
-        velocity = velocity.normalized * Time.deltaTime * moveSpeed;
-        transform.localPosition += velocity;
-         */
+
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -101,31 +108,35 @@ public class AgentTrainingController : Agent
     {
         if (Time.time - lastCollisionTime < collisionCooldown)
             return; // Skip if we are in cooldown
-
+        
         if (other.CompareTag("OutsideWall") || other.CompareTag("InnerWall"))
         {
             
             lastCollisionTime = Time.time; // Update last collision time
-            SetReward(-10f);
+            SetReward(wallReward);
             ResetDisabledPoints();
+            agentRenderer.material.color = Color.red;
             EndEpisode();
         }
+         
 
         if (other.CompareTag("Point"))
         {
 
-            SetReward(1f);
+            SetReward(pointReward);
             disabledPoints.Add(other.gameObject);
+            StartCoroutine(ReactivatePointAfterDelay(other.gameObject, pointReactivationTime));
             other.gameObject.SetActive(false);
         }
 
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
 
-            SetReward(50f);
+            SetReward(goalReward);
             DestroyMazeElementsExceptTag(environmentParentGameObject,"Agent");
             currentMazeInstance = null;
             disabledPoints.Clear();
+            agentRenderer.material.color = Color.green;
             EndEpisode();
         }
 
@@ -133,6 +144,15 @@ public class AgentTrainingController : Agent
 
     //-----------------------------------------------------------------------------------------
 
+    private IEnumerator ReactivatePointAfterDelay(GameObject point, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (point != null)
+        {
+            point.SetActive(true);
+            disabledPoints.Remove(point);
+        }
+    }
 
     private void ResetDisabledPoints()
     {
@@ -184,5 +204,21 @@ public class AgentTrainingController : Agent
         return null; // Return null if no child with the tag is found
     }
 
+    private void EpisodeTimerNew()
+    {
+        timeLeft = Time.time + timeForEp;
+
+    }
+
+    private void CheckRemainingTime()
+    {
+        if(Time.time >= timeLeft)
+        {
+            AddReward(timePenaltyReward);
+            agentRenderer.material.color = Color.blue;
+            ResetDisabledPoints();
+            EndEpisode();
+        }
+    }
 
 }
