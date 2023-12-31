@@ -14,11 +14,17 @@ public class OnlyMazeGenerator : MonoBehaviour
     [SerializeField]
     private MazeCell _endCell;
     [SerializeField]
-    private int _mazeWidth;
+    private int _maxMazeWidth;
     [SerializeField]
+    private int _maxMazeHeight;
+    [SerializeField]
+    private int _minimum;
+
+    private int _mazeWidth;
     private int _mazeHeight;
+
     
-    
+
     private GameObject environmentParent;
 
     private MazeCell[,] _mazeGrid;
@@ -26,8 +32,10 @@ public class OnlyMazeGenerator : MonoBehaviour
 
     void Start()
     {
-        
 
+        _mazeWidth = Random.Range(_minimum, _maxMazeWidth);
+        _mazeHeight = Random.Range(_minimum, _maxMazeWidth);
+;
         Vector2Int[] corners = new Vector2Int[]{
             new Vector2Int(0, 0),
             new Vector2Int(_mazeWidth - 1, 0),
@@ -39,8 +47,6 @@ public class OnlyMazeGenerator : MonoBehaviour
         Vector2Int oppositeCorner = new Vector2Int(_mazeWidth - 1 - selectedCorner.x, _mazeHeight - 1 - selectedCorner.y); //Player Spawn Corner
 
         environmentParent = transform.parent.gameObject;
-
-        Debug.Log("Parent Name: " + environmentParent.name);
 
         GenerateGrid(selectedCorner, oppositeCorner);
 

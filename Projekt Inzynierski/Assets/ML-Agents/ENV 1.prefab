@@ -222,12 +222,13 @@ MonoBehaviour:
     type: 3}
   environmentParentGameObject: {fileID: 4104087050891098744}
   moveSpeed: 2
-  timeForEp: 40.01
-  pointReactivationTime: 17.4
-  wallReward: -60
-  pointReward: 2.2
-  timePenaltyReward: -60
+  timeForEp: 90.08
+  pointReactivationTime: 10.21
+  wallReward: -70
+  pointReward: 0
+  timePenaltyReward: -70
   goalReward: 140
+  OneSecondPenalty: 0.015
 --- !u!114 &6642289764667994035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 8325274834082202464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.693, z: 0.283}
+  m_LocalPosition: {x: 0, y: 0.693, z: 0.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,7 +398,7 @@ MonoBehaviour:
   - Point
   m_RaysPerDirection: 5
   m_MaxRayDegrees: 74.1
-  m_SphereCastRadius: 0.5
+  m_SphereCastRadius: 0.22
   m_RayLength: 24
   m_RayLayerMask:
     serializedVersion: 2

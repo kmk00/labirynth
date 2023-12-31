@@ -18,6 +18,7 @@ public class AgentTrainingController : Agent
     [SerializeField]
     private float pointReactivationTime = 5f;
 
+
     //Rewards
     [SerializeField]
     private float wallReward;
@@ -27,12 +28,12 @@ public class AgentTrainingController : Agent
     private float timePenaltyReward;
     [SerializeField]
     private float goalReward;
+    [SerializeField]
+    private float OneSecondPenalty;
 
     private GameObject currentMazeInstance;
     private GameObject startingCell;
-    private GameObject endCell;
     private Vector3 startingCellPos;
-    private Vector3 endingCellPos;
 
     private float lastCollisionTime = -1f;
     private float collisionCooldown = 0.4f;
@@ -45,12 +46,14 @@ public class AgentTrainingController : Agent
 
     private float timeLeft;
 
+    private float lastPenaltyTime;
 
 
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody>();
         agentRenderer = GetComponent<Renderer>();
+        lastPenaltyTime = Time.time;
     }
 
     private void Update()
@@ -72,7 +75,7 @@ public class AgentTrainingController : Agent
 
         StartCoroutine(InitializeStartPosition());
         EpisodeTimerNew();
-
+        lastPenaltyTime = Time.time;
 
 
 
@@ -108,7 +111,7 @@ public class AgentTrainingController : Agent
     {
         if (Time.time - lastCollisionTime < collisionCooldown)
             return; // Skip if we are in cooldown
-        
+        /*
         if (other.CompareTag("OutsideWall") || other.CompareTag("InnerWall"))
         {
             
@@ -118,6 +121,7 @@ public class AgentTrainingController : Agent
             agentRenderer.material.color = Color.red;
             EndEpisode();
         }
+         */
          
 
         if (other.CompareTag("Point"))
@@ -218,6 +222,11 @@ public class AgentTrainingController : Agent
             agentRenderer.material.color = Color.blue;
             ResetDisabledPoints();
             EndEpisode();
+        }
+        else if (Time.time - lastPenaltyTime > 1.0f) // Na przyk³ad co 1 sekundê
+        {
+            AddReward(-OneSecondPenalty); // Sta³a, niewielka kara za czas
+            lastPenaltyTime = Time.time;
         }
     }
 
