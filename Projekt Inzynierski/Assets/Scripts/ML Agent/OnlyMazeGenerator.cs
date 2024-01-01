@@ -191,7 +191,6 @@ public class OnlyMazeGenerator : MonoBehaviour
         }
     }
 
-
     private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
         if (previousCell == null)
@@ -230,10 +229,4 @@ public class OnlyMazeGenerator : MonoBehaviour
             return;
         }
     }
-
-    private void OnDestroy()
-    {
-        
-    }
-
 }

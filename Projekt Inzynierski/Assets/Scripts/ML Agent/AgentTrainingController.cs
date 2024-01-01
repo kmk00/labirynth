@@ -7,48 +7,48 @@ using UnityEngine;
 
 public class AgentTrainingController : Agent
 {
+    // Ustawienia œrodowiska agenta
     [SerializeField]
-    private GameObject mazeGeneratorObject;
+    private GameObject mazeGeneratorObject; // Obiekt generatora labiryntu.
     [SerializeField]
-    private GameObject environmentParentGameObject;
+    private GameObject environmentParentGameObject; // Rodzic œrodowiska, w którym dzia³a agent.
     [SerializeField]
-    private float moveSpeed = 4f;
+    private float moveSpeed; // Prêdkoœc ruchu agenta
     [SerializeField]
-    private float timeForEp;
+    private float timeForEp; // Czas trwania epizodu
     [SerializeField]
-    private float pointReactivationTime = 5f;
+    private float pointReactivationTime; // Czas reaktywacji punktu po podniesieniu
 
-
-    //Rewards
+    // Definicje nagród i kar
     [SerializeField]
-    private float wallReward;
+    private float wallReward; // Nagroda za uderzenie w œciane 
     [SerializeField]
-    private float pointReward;
+    private float pointReward; // Nagroda za zdobycie punktu
     [SerializeField]
-    private float timePenaltyReward;
+    private float timePenaltyReward; // Nagroda za przekroczenie czasu wyszukiwania celu
     [SerializeField]
-    private float goalReward;
+    private float goalReward; // Nagroda za znalezienie celu
     [SerializeField]
-    private float OneSecondPenalty;
+    private float OneSecondPenalty; // Nagroda otrzymywana co okreœlony czas
 
-    private GameObject currentMazeInstance;
-    private GameObject startingCell;
-    private Vector3 startingCellPos;
+    // Zmienne prywatne do kontroli logiki agenta
+    private GameObject currentMazeInstance; //Aktualna instancja labiryntu
+    private GameObject startingCell; // Komórka startowa w labiryncie
+    private Vector3 startingCellPos; // Pozycja komórki startowej
 
-    private float lastCollisionTime = -1f;
-    private float collisionCooldown = 0.4f;
-    private GameObject[] wallsPrefabs;
+    private float lastCollisionTime = -1f; // Ostatni czas kolizji
+    private float collisionCooldown = 0.4f; // Czas odnowienia kolizji
 
-    private Rigidbody rb;
-    private Renderer agentRenderer;
+    private Rigidbody rb; // Komponent Rigidbody agenta
+    private Renderer agentRenderer; // Render agenta
 
-    private List<GameObject> disabledPoints = new List<GameObject>();
+    private List<GameObject> disabledPoints = new List<GameObject>(); // Lista wy³¹czonych punktów
 
-    private float timeLeft;
+    private float timeLeft; // Pozosta³y czas do koñca epizodu
 
-    private float lastPenaltyTime;
-
-
+    private float lastPenaltyTime; // Ostatni czas na³o¿enia kary
+    
+    // Inicjalizacja agenta
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody>();
@@ -56,39 +56,34 @@ public class AgentTrainingController : Agent
         lastPenaltyTime = Time.time;
     }
 
+    // Aktualizacja stanu agenta w ka¿dej klatce
     private void Update()
     {
         CheckRemainingTime();
     }
 
+    // Logika rozpoczêcia nowego epizodu
     public override void OnEpisodeBegin()
     {
-
+        // Tworzenie nowego labiryntu, jeœli nie istnieje
         if (currentMazeInstance == null)
         {
-
             currentMazeInstance = Instantiate(mazeGeneratorObject, Vector3.zero, Quaternion.identity, environmentParentGameObject.transform);
             StartCoroutine(InitializeStartPosition());
-
         }
-
 
         StartCoroutine(InitializeStartPosition());
         EpisodeTimerNew();
         lastPenaltyTime = Time.time;
-
-
-
     }
 
-
+    // Zbieranie obserwacji przez agenta
     public override void CollectObservations(VectorSensor sensor)
     {
-
         sensor.AddObservation(transform.localPosition);
-
     }
 
+    // Odbieranie i przetwarzanie akcji od agenta
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveRotate = actions.ContinuousActions[0];
@@ -96,10 +91,9 @@ public class AgentTrainingController : Agent
 
         rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
         transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
-
-
     }
 
+    // Heurystyka dla testowania agenta bez uczenia maszynowego
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> continousActions = actionsOut.ContinuousActions;
@@ -107,11 +101,16 @@ public class AgentTrainingController : Agent
         continousActions[1] = Input.GetAxisRaw("Vertical");
     }
 
+    // Detekcja kolizji agenta
     public void OnTriggerEnter(Collider other)
     {
+
+
         if (Time.time - lastCollisionTime < collisionCooldown)
-            return; // Skip if we are in cooldown
-        /*
+            // Rozwi¹zuje problem podwójnego collidera w jedej œcianie
+            return; 
+        
+        /* Instrukcja warunkowa wykorzystywana przy treningu agenta
         if (other.CompareTag("OutsideWall") || other.CompareTag("InnerWall"))
         {
             
@@ -122,11 +121,9 @@ public class AgentTrainingController : Agent
             EndEpisode();
         }
          */
-         
 
         if (other.CompareTag("Point"))
         {
-
             SetReward(pointReward);
             disabledPoints.Add(other.gameObject);
             StartCoroutine(ReactivatePointAfterDelay(other.gameObject, pointReactivationTime));
@@ -135,7 +132,6 @@ public class AgentTrainingController : Agent
 
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
-
             SetReward(goalReward);
             DestroyMazeElementsExceptTag(environmentParentGameObject,"Agent");
             currentMazeInstance = null;
@@ -143,10 +139,10 @@ public class AgentTrainingController : Agent
             agentRenderer.material.color = Color.green;
             EndEpisode();
         }
-
     }
 
     //-----------------------------------------------------------------------------------------
+
 
     private IEnumerator ReactivatePointAfterDelay(GameObject point, float delay)
     {
@@ -158,6 +154,7 @@ public class AgentTrainingController : Agent
         }
     }
 
+    // Ustawia wszystkie zebrane punkty na aktywne
     private void ResetDisabledPoints()
     {
         foreach (var point in disabledPoints)
@@ -167,6 +164,7 @@ public class AgentTrainingController : Agent
         disabledPoints.Clear();
     }
 
+    // Zniszczenie wszystkich elementów za wyj¹tkiem elementów z wybranym tagiem
     private void DestroyMazeElementsExceptTag(GameObject parent, string tag)
     {
         foreach (Transform child in parent.transform)
@@ -179,6 +177,7 @@ public class AgentTrainingController : Agent
 
     }
 
+    // Ustala pozycje startow¹ agenta po stworzeniu labiryntu dla konkretnego œrodowiska
     private IEnumerator InitializeStartPosition()
     {
         yield return null;
@@ -196,6 +195,7 @@ public class AgentTrainingController : Agent
         }
     }
 
+    // Wyszukuje child element wybranego rodzica
     GameObject FindChildWithTag(GameObject parent, string tag)
     {
         foreach (Transform child in parent.transform)
@@ -205,17 +205,19 @@ public class AgentTrainingController : Agent
                 return child.gameObject;
             }
         }
-        return null; // Return null if no child with the tag is found
+        return null; 
     }
 
+    // Rozpoczêcie liczenia czasu
     private void EpisodeTimerNew()
     {
         timeLeft = Time.time + timeForEp;
-
     }
 
+    // Obs³uga zwi¹zane z czasem
     private void CheckRemainingTime()
     {
+        //Sprawdzenie czy cel zostaje znaleziony w czasie
         if(Time.time >= timeLeft)
         {
             AddReward(timePenaltyReward);
@@ -223,11 +225,11 @@ public class AgentTrainingController : Agent
             ResetDisabledPoints();
             EndEpisode();
         }
-        else if (Time.time - lastPenaltyTime > 1.0f) // Na przyk³ad co 1 sekundê
+        //Kara za sekunde wyszukiwania 
+        else if (Time.time - lastPenaltyTime > 1.0f) 
         {
-            AddReward(-OneSecondPenalty); // Sta³a, niewielka kara za czas
+            AddReward(-OneSecondPenalty);
             lastPenaltyTime = Time.time;
         }
     }
-
 }
