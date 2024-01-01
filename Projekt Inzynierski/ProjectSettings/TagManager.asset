@@ -7,6 +7,15 @@ TagManager:
   - Timer
   - EndCell
   - StartCell
+  - Wall
+  - OutsideWall
+  - InnerWall
+  - InnerCell
+  - Unvisited
+  - Visited
+  - Point
+  - Env
+  - Agent
   layers:
   - Default
   - TransparentFX

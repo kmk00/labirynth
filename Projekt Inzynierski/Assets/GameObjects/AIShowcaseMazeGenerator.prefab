@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1739661207485305475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3494310635046593522}
+  - component: {fileID: 8390170899330150334}
+  m_Layer: 0
+  m_Name: AIShowcaseMazeGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3494310635046593522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739661207485305475}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8390170899330150334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739661207485305475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b612c13e3b601d141bb4cff6072d7e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellPref: {fileID: 2472250353459992722, guid: 6e95bb53c1ae4eb49af20712574c6b64,
+    type: 3}
+  _startCell: {fileID: 5933990187875259761, guid: 46c8a40ca7589554ebeb02756509dc13,
+    type: 3}
+  _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
+    type: 3}
+  _maxMazeWidth: 9
+  _maxMazeHeight: 9
+  _minimum: 3

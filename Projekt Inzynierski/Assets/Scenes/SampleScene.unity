@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -392,59 +392,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1171750545
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1171750547}
-  - component: {fileID: 1171750548}
-  m_Layer: 0
-  m_Name: GenerateMaze
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1171750547
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171750545}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.4723673, y: -5.0961504, z: 3.1552372}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1171750548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171750545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff31b02de13596044811cc2a8928ca8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cellPref: {fileID: 2472250353459992722, guid: 6e95bb53c1ae4eb49af20712574c6b64,
-    type: 3}
-  _startCell: {fileID: 5933990187875259761, guid: 46c8a40ca7589554ebeb02756509dc13,
-    type: 3}
-  _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
-    type: 3}
-  _mazeWidth: 10
-  _mazeHeight: 15
-  _player: {fileID: 7183281276088497169, guid: 9046c318884a5044d9c8e95299801f1f, type: 3}
 --- !u!1 &1220787415
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,6 +700,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378641755}
   m_CullTransparentMesh: 1
+--- !u!1001 &7412517419161672569
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2201990711928651938, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_Name
+      value: GenerateMaze
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.4723673
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.0961504
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.1552372
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165754514335235528, guid: 87966ffdf7720244194df7a391f2be71,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87966ffdf7720244194df7a391f2be71, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -760,6 +775,6 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1314867027}
-  - {fileID: 1171750547}
+  - {fileID: 7412517419161672569}
   - {fileID: 1220787418}
   - {fileID: 263193201}
