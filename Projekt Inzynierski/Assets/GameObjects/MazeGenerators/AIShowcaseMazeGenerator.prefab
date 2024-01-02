@@ -48,7 +48,7 @@ MonoBehaviour:
     type: 3}
   _startCell: {fileID: 5933990187875259761, guid: 46c8a40ca7589554ebeb02756509dc13,
     type: 3}
-  _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
+  _endCell: {fileID: 6399613066299044135, guid: 8b3b7319ab900184f8c2071daaba6c81,
     type: 3}
   _maxMazeWidth: 9
   _maxMazeHeight: 9
