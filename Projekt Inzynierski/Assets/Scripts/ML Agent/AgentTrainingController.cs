@@ -110,7 +110,8 @@ public class AgentTrainingController : Agent
             // Rozwi¹zuje problem podwójnego collidera w jedej œcianie
             return; 
         
-        /* Instrukcja warunkowa wykorzystywana przy treningu agenta
+        /* Instrukcja warunkowa wykorzystywana przy treningu agenta */
+        /*
         if (other.CompareTag("OutsideWall") || other.CompareTag("InnerWall"))
         {
             
@@ -121,6 +122,7 @@ public class AgentTrainingController : Agent
             EndEpisode();
         }
          */
+         
 
         if (other.CompareTag("Point"))
         {

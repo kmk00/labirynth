@@ -50,6 +50,6 @@ MonoBehaviour:
     type: 3}
   _endCell: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
     type: 3}
-  _maxMazeWidth: 9
-  _maxMazeHeight: 9
-  _minimum: 8
+  _maxMazeWidth: 6
+  _maxMazeHeight: 6
+  _minimum: 3

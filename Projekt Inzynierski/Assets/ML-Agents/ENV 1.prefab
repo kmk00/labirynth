@@ -222,10 +222,10 @@ MonoBehaviour:
     type: 3}
   environmentParentGameObject: {fileID: 4104087050891098744}
   moveSpeed: 2
-  timeForEp: 90.08
-  pointReactivationTime: 10.21
+  timeForEp: 20
+  pointReactivationTime: 10
   wallReward: -70
-  pointReward: 0
+  pointReward: 14.98
   timePenaltyReward: -70
   goalReward: 140
   OneSecondPenalty: 0.015
