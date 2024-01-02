@@ -9,9 +9,8 @@ public class AIAgent : Agent
 {
     [SerializeField]
     private float moveSpeed;
-    private Rigidbody rb; 
-    private Renderer agentRenderer; 
-
+    private Rigidbody rb;
+    private Renderer agentRenderer;
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody>();
