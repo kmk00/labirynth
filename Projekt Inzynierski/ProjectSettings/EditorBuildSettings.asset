@@ -5,13 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 8305f5a3178ec24498a66ace92a6233e
+  - enabled: 1
+    path: Assets/Scenes/AI Only/DFS.unity
+    guid: 6e256f25cd285b647aa66aa67a845fc5
+  - enabled: 1
+    path: Assets/Scenes/AI Only/BFS.unity
+    guid: 39d18b220cc04764194dadefbdfac7a0
+  - enabled: 1
+    path: Assets/Scenes/AI Only/Q-Learning.unity
+    guid: 95b6512af67570b4c99f0a857bf0d29c
   - enabled: 0
     path: Assets/Scenes/Other/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/Scenes/AI Only/Depth First Search.unity
-    guid: 6e256f25cd285b647aa66aa67a845fc5
   - enabled: 1
-    path: Assets/Scenes/AI Only/AIShowcase.unity
-    guid: 95b6512af67570b4c99f0a857bf0d29c
+    path: Assets/Scenes/Player VS AI/PlayerVsDFS.unity
+    guid: 6d2af09986625fe4caae917d275243e6
+  - enabled: 1
+    path: Assets/Scenes/Player VS AI/PlayerVsBFS.unity
+    guid: 8846b61f6ff9b844b9279a4ec9cb635e
+  - enabled: 1
+    path: Assets/Scenes/Player VS AI/PlayerVsQ-Learning.unity
+    guid: 8584012a06ae0e947b9296e329fd446a
   m_configObjects: {}
