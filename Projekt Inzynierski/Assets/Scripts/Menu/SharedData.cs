@@ -12,13 +12,29 @@ public class SharedData : MonoBehaviour
     static int _x = 3;
     static int _y = 3;
 
-    public static SharedData GetInstance()
+    public static SharedData Instance
     {
-        if (_instance == null)
+        get
         {
-            _instance = new SharedData();
+            if (_instance == null)
+            {
+                _instance = new GameObject("SharedData").AddComponent<SharedData>();
+            }
+            return _instance;
         }
-        return _instance;
+    }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     public static void SetX(int x)
