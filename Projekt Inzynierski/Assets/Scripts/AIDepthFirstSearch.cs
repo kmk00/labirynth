@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AIDepthFirst : MonoBehaviour
@@ -59,7 +56,7 @@ public class AIDepthFirst : MonoBehaviour
         {
             if (isMovingTowardsCenter)
             {
-                float speed = 5.0f;
+                float speed = 1.0f;
                 float step = speed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetCenterPosition, step);
                 if (transform.position == targetCenterPosition) { isMovingTowardsCenter = false; }

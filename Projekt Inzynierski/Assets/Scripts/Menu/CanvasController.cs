@@ -29,7 +29,7 @@ public class CanvasController : MonoBehaviour
     }
     private void UpdateXValue(string newXValue)
     {
-        if (int.TryParse(newXValue, out int x) && x >= 0)
+        if (int.TryParse(newXValue, out int x) && x > 1)
             SharedData.X = x;
         else
         {
@@ -40,7 +40,7 @@ public class CanvasController : MonoBehaviour
 
     private void UpdateYValue(string newYValue)
     {
-        if (int.TryParse(newYValue, out int y) && y >= 0)
+        if (int.TryParse(newYValue, out int y) && y > 1)
             SharedData.Y = y;
         else
         {
