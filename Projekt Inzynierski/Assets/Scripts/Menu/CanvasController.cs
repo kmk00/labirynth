@@ -17,11 +17,11 @@ public class CanvasController : MonoBehaviour
     {
         if (int.TryParse(newXValue, out int x))
         {
-            SharedData.SetX(x);
+            SharedData.X = x;
         }
         else
         {
-            SharedData.SetX(3);
+            SharedData.X = 3;
             xInputField.text = "3";
         }
     }
@@ -30,11 +30,11 @@ public class CanvasController : MonoBehaviour
     {
         if (int.TryParse(newYValue, out int y))
         {
-            SharedData.SetY(y);
+            SharedData.Y = y;
         }
         else
         {
-            SharedData.SetY(3);
+            SharedData.Y = 3;
             yInputField.text = "3";
         }
     }
