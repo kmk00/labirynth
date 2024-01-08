@@ -93,7 +93,6 @@ public class OnlyMazeGenerator : MonoBehaviour
         }
     }
 
-
     private void TagChildObjects(MazeCell parent,int i, int j)
     {
         foreach (Transform child in parent.transform)
