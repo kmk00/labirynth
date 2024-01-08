@@ -1,18 +1,32 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
     public TMP_InputField xInputField;
     public TMP_InputField yInputField;
+    public Toggle MinimumToggle;
+
+    private void Awake()
+    {
+        xInputField.text = SharedData.X.ToString();
+        yInputField.text = SharedData.Y.ToString();
+        if(SharedData.IsMinimumOn.Equals(true))
+            MinimumToggle.isOn = true;
+        else if(SharedData.IsMinimumOn.Equals(false))
+            MinimumToggle.isOn = false;
+    }
 
     private void Start()
     {
         xInputField.onEndEdit.AddListener(UpdateXValue);
         yInputField.onEndEdit.AddListener(UpdateYValue);
     }
-
+    public void Update()
+    {
+        SharedData.IsMinimumOn = MinimumToggle.isOn;
+    }
     private void UpdateXValue(string newXValue)
     {
         if (int.TryParse(newXValue, out int x) && x >= 0)

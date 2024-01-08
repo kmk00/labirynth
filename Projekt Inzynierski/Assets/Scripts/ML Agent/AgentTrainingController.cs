@@ -57,10 +57,10 @@ public class AgentTrainingController : Agent
     }
 
     // Aktualizacja stanu agenta w ka¿dej klatce
-    private void Update()
-    {
-        CheckRemainingTime();
-    }
+    //private void Update()
+    //{
+    //    CheckRemainingTime();
+   // }
 
     // Logika rozpoczêcia nowego epizodu
     public override void OnEpisodeBegin()

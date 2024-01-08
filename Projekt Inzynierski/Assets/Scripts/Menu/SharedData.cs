@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SharedData : MonoBehaviour
@@ -21,6 +18,13 @@ public class SharedData : MonoBehaviour
         set { _y = value; }
     }
     static int _y = 3;
+
+    public static bool IsMinimumOn
+    {
+        get => _isMinimumOn;
+        set { _isMinimumOn = value; }
+    }
+    static bool _isMinimumOn;
 
     public static SharedData Instance
     {

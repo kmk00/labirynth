@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class OnlyMazeGenerator : MonoBehaviour
@@ -14,16 +12,10 @@ public class OnlyMazeGenerator : MonoBehaviour
     [SerializeField]
     private MazeCell _endCell;
     [SerializeField]
-    private int _maxMazeWidth;
-    [SerializeField]
-    private int _maxMazeHeight;
-    [SerializeField]
     private int _minimum;
 
     private int _mazeWidth;
     private int _mazeHeight;
-
-    
 
     private GameObject environmentParent;
 
@@ -33,9 +25,19 @@ public class OnlyMazeGenerator : MonoBehaviour
     void Start()
     {
 
-        _mazeWidth = Random.Range(_minimum, _maxMazeWidth);
-        _mazeHeight = Random.Range(_minimum, _maxMazeWidth);
-;
+        if(SharedData.IsMinimumOn)
+        {
+            _minimum = 3;
+            _mazeWidth = Random.Range(_minimum, SharedData.X);
+            _mazeHeight = Random.Range(_minimum, SharedData.Y);
+        }
+        else
+        {
+            _mazeWidth = SharedData.X;
+            _mazeHeight = SharedData.Y;
+            Debug.Log("Sztywno");
+        }
+        Debug.Log("x: "+ _mazeWidth + ",y: " + _mazeHeight);
         Vector2Int[] corners = new Vector2Int[]{
             new Vector2Int(0, 0),
             new Vector2Int(_mazeWidth - 1, 0),
