@@ -38,8 +38,17 @@ public class PlayerVSAIMaze : MonoBehaviour
     void Start()
     {
 
-        _mazeWidth = Random.Range(_minimum, _maxMazeWidth);
-        _mazeHeight = Random.Range(_minimum, _maxMazeWidth);
+        if (SharedData.IsMinimumOn)
+        {
+            _minimum = 3;
+            _mazeWidth = Random.Range(_minimum, SharedData.X);
+            _mazeHeight = Random.Range(_minimum, SharedData.Y);
+        }
+        else
+        {
+            _mazeWidth = SharedData.X;
+            _mazeHeight = SharedData.Y;
+        }
 
         mazeContainer = new GameObject("MazeContainer");
         mazeContainer.name = "PlayerMaze";
