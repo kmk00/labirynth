@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,9 +11,7 @@ public class MazeGenerator : MonoBehaviour
     private MazeCell _startCell;
     [SerializeField]
     private MazeCell _endCell;
-    [SerializeField]
     private int _mazeWidth;
-    [SerializeField]
     private int _mazeHeight;
     [SerializeField]
     private GameObject _player;
@@ -25,6 +22,8 @@ public class MazeGenerator : MonoBehaviour
 
     void Start()
     {
+        _mazeWidth = SharedData.X;
+        _mazeHeight = SharedData.Y;
         GenerateGrid();
         GenerateMaze(null, _mazeGrid[0, 0]);
         InstantiatePlayer();
