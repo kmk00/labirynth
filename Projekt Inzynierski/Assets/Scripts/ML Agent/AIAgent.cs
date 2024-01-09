@@ -12,7 +12,6 @@ public class AIAgent : Agent
     private Rigidbody rb;
     private List<GameObject> disabledPoints = new List<GameObject>();
     private float pointReactivationTime = 14;
-    private float pointReward = 2f;
 
     public override void Initialize()
     {
