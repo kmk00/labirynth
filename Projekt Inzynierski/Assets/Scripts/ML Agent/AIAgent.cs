@@ -10,11 +10,13 @@ public class AIAgent : Agent
     [SerializeField]
     private float moveSpeed;
     private Rigidbody rb;
-    private Renderer agentRenderer;
+    private List<GameObject> disabledPoints = new List<GameObject>();
+    private float pointReactivationTime = 14;
+    private float pointReward = 2f;
+
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody>();
-        agentRenderer = GetComponent<Renderer>();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -29,5 +31,25 @@ public class AIAgent : Agent
 
         rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
         transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Point"))
+        {
+            disabledPoints.Add(other.gameObject);
+            StartCoroutine(ReactivatePointAfterDelay(other.gameObject, pointReactivationTime));
+            other.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator ReactivatePointAfterDelay(GameObject point, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (point != null)
+        {
+            point.SetActive(true);
+            disabledPoints.Remove(point);
+        }
     }
 }
