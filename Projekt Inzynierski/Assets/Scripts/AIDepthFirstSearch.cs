@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AIDepthFirst : MonoBehaviour
 {
+
+    [SerializeField]
+    private float speed;
+
     public Stack<MazeCellStack> maze = new Stack<MazeCellStack>();
     bool[,,] visited;
     bool isGoingBack = false;
@@ -62,7 +66,7 @@ public class AIDepthFirst : MonoBehaviour
         {
             if (isMovingTowardsCenter)
             {
-                float speed = 1.0f;
+                
                 float step = speed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetCenterPosition, step);
                 if (transform.position == targetCenterPosition) { isMovingTowardsCenter = false; }
