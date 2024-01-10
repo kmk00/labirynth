@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class OnlyMazeGenerator : MazeGeneratorBase
 {
+    [SerializeField]
+    private GameObject AI_Algorithm;
 
     private GameObject environmentParent;
+
 
 
     void Start()
@@ -46,6 +49,13 @@ public class OnlyMazeGenerator : MazeGeneratorBase
         {
             Debug.LogError("Selected corner cell is null. Maze generation failed.");
         }
+
+        if(environmentParent.name == "AIMaze")
+        {
+            Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 0.4f, oppositeCorner.y - _mazeHeight / 2);
+            Instantiate(AI_Algorithm, aiPosition, Quaternion.identity, environmentParent.transform);
+        }
+
 
     }
 
