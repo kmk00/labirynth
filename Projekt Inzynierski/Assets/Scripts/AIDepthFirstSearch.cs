@@ -13,20 +13,39 @@ public class AIDepthFirst : MonoBehaviour
     bool isGoingBack = false;
     bool isEnd = false;
     bool isMovingTowardsCenter = false;
+    bool isPaused = true;
     private Vector3 targetCenterPosition;
     private Vector3 finalPosition = new Vector3(0, 0, 0);
     Stack<Vector3> pathStack = new Stack<Vector3>();
+    public Vector3 start;
+    int noWayCounter = 0;
+    float timer = 0f;
+
+    void PrintVisitedValues()
+    {
+        for (int x = 0; x < visited.GetLength(0); x++)
+        {
+            for (int y = 0; y < visited.GetLength(1); y++)
+            {
+                for (int z = 0; z < visited.GetLength(2); z++)
+                {
+                    if (visited[x, y, z])
+                    {
+                        Debug.Log($"Visited: ({x - 100}, {z - 100})");
+                    }
+                }
+            }
+        }
+    }
 
     void Start()
     {
-        Vector3 start = transform.position;
+        Time.timeScale = 1f;
         int maxX = 100;
         int maxY = 100;
         int maxZ = 100;
         visited = new bool[2 * maxX, 2 * maxY, 2 * maxZ];
-        visited[(int)start.x + maxX, (int)start.y + maxY, (int)start.z + maxZ] = true;
         GameObject aimazeObject = GameObject.Find("AIMaze");
-        pathStack.Push(start);
 
         GameObject endingCell = GameObject.Find("Ending Cell(Clone)");
 
@@ -54,49 +73,103 @@ public class AIDepthFirst : MonoBehaviour
             Debug.LogError("Ending Cell(Clone) not found.");
         }
 
-        Time.timeScale = 1f;
-        StartCoroutine(PauseForSeconds((float)0.1f));
+        GameObject startingCell = GameObject.Find("Starting Cell(Clone)");
+
+        if (aimazeObject != null)
+        {
+            Transform startingCellTransform = aimazeObject.transform.Find("Starting Cell(Clone)");
+            if (startingCellTransform != null) { startingCell = startingCellTransform.gameObject; }
+        }
+
+        if (startingCell != null)
+        {
+            Transform groundTransform = startingCell.transform.Find("Ground");
+
+            if (groundTransform != null)
+            {
+                start = groundTransform.position;
+                pathStack.Push(start);
+                visited[(int)start.x + maxX, (int)start.y + maxY, (int)start.z + maxZ] = true;
+            }
+            else
+            {
+                Debug.LogError("Ground object not found inside Starting Cell(Clone).");
+            }
+        }
+        else
+        {
+            Debug.LogError("Starting Cell(Clone) not found.");
+        }
+
+        PrintVisitedValues();
+
     }
 
 
     void Update()
     {
-        finalPosition.y = transform.position.y;
-        if (isEnd == false)
+        if (isPaused == true)
         {
-            if (isMovingTowardsCenter)
+            if (timer < 1f)
             {
-                
-                float step = speed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetCenterPosition, step);
-                if (transform.position == targetCenterPosition) { isMovingTowardsCenter = false; }
-            }
-            else if (isMovingTowardsCenter == false & isGoingBack == false)
-            {
-                if (Mathf.Approximately(0f, GetComponent<Rigidbody>().velocity.sqrMagnitude))
-                {
-                    FindAllWays();
-                    if (isGoingBack == true) { pathStack.Pop(); }
-                }
+                timer += Time.deltaTime;
             }
             else
             {
-                if (pathStack.Count > 0)
+                isPaused = false;
+            }
+        }
+        else
+        {
+            finalPosition.y = transform.position.y;
+            if (isEnd == false)
+            {
+                if (isMovingTowardsCenter)
                 {
-                    Vector3 nextWaypoint = pathStack.Peek();
-                    isMovingTowardsCenter = true;
-                    targetCenterPosition = new Vector3(nextWaypoint.x, transform.position.y, nextWaypoint.z);
-                    isGoingBack = false;
+
+                    float step = speed * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, targetCenterPosition, step);
+                    if (transform.position == targetCenterPosition) { isMovingTowardsCenter = false; }
+                }
+                else if (isMovingTowardsCenter == false & isGoingBack == false)
+                {
+                    if (Mathf.Approximately(0f, GetComponent<Rigidbody>().velocity.sqrMagnitude))
+                    {
+                        FindAllWays();
+                        if (isGoingBack == true) { pathStack.Pop(); } else { noWayCounter = 0; }
+                    }
                 }
                 else
                 {
-                    isGoingBack = false;
-                    Debug.Log("Nie ma drogi!");
+                    if (Mathf.Approximately(0f, GetComponent<Rigidbody>().velocity.sqrMagnitude))
+                    {
+                        if (pathStack.Count > 0)
+                        {
+                            Vector3 nextWaypoint = pathStack.Peek();
+                            isMovingTowardsCenter = true;
+                            targetCenterPosition = new Vector3(nextWaypoint.x, transform.position.y, nextWaypoint.z);
+                            isGoingBack = false;
+                        }
+                        else
+                        {
+                            if (noWayCounter == 3)
+                            {
+                                isEnd = true;
+                                Debug.Log("Nie ma drogi!");
+                                PrintVisitedValues();
+                            }
+                            else
+                            {
+                                isGoingBack = false;
+                                noWayCounter++;
+                            }
+                        }
+                    }
                 }
-            }
-            if (transform.position == finalPosition)
-            {
-                isEnd = true;
+                if (transform.position == finalPosition)
+                {
+                    isEnd = true;
+                }
             }
         }
     }
@@ -108,13 +181,14 @@ public class AIDepthFirst : MonoBehaviour
 
     public void FindAllWays()
     {
+        int i = 0;
         float rayAngle = 30f;
         Quaternion rayRotation;
         Vector3 rayDirection;
         Ray ray;
         float maxDistance = 2f;
 
-        for (int i = 0; i < 4; ++i)
+        for (i = 0; i < 4; ++i)
         {
             switch (i)
             {
@@ -132,12 +206,13 @@ public class AIDepthFirst : MonoBehaviour
                             targetCenterPosition = new Vector3(hitObjectTransform.position.x, transform.position.y, hitObjectTransform.position.z);
                             pathStack.Push(targetCenterPosition);
                             isMovingTowardsCenter = true;
-                            i = 4;
+                            i = 5;
                             isGoingBack = false;
+                            Debug.Log("Up Added");
                         }
                         else
                         {
-                            Debug.Log("Ray hit else");
+                            Debug.Log("1");
                         }
                     }
                     break;
@@ -145,7 +220,6 @@ public class AIDepthFirst : MonoBehaviour
                     rayRotation = Quaternion.Euler(-rayAngle, 0, 0);
                     rayDirection = rayRotation * Vector3.back;
                     ray = new Ray(transform.position, rayDirection);
-                    Debug.DrawRay(transform.position, rayDirection, Color.red);
                     if (Physics.Raycast(ray, out hit, maxDistance))
                     {
                         if (hit.collider.gameObject.name == "Cube" && hit.collider.gameObject.transform.parent.name == "Ground" && !CheckVisited(hit.collider.gameObject.transform.position))
@@ -155,12 +229,13 @@ public class AIDepthFirst : MonoBehaviour
                             targetCenterPosition = new Vector3(hitObjectTransform.position.x, transform.position.y, hitObjectTransform.position.z);
                             isMovingTowardsCenter = true;
                             pathStack.Push(targetCenterPosition);
-                            i = 4;
+                            i = 5;
                             isGoingBack = false;
+                            Debug.Log("Down Added");
                         }
                         else
                         {
-                            Debug.Log("Ray hit else");
+                            Debug.Log("2");
                         }
                     }
                     break;
@@ -168,7 +243,6 @@ public class AIDepthFirst : MonoBehaviour
                     rayRotation = Quaternion.Euler(0, 0, rayAngle);
                     rayDirection = rayRotation * Vector3.left;
                     ray = new Ray(transform.position, rayDirection);
-                    Debug.DrawRay(transform.position, rayDirection, Color.red);
                     if (Physics.Raycast(ray, out hit, maxDistance))
                     {
                         if (hit.collider.gameObject.name == "Cube" && hit.collider.gameObject.transform.parent.name == "Ground" && !CheckVisited(hit.collider.gameObject.transform.position))
@@ -178,12 +252,13 @@ public class AIDepthFirst : MonoBehaviour
                             targetCenterPosition = new Vector3(hitObjectTransform.position.x, transform.position.y, hitObjectTransform.position.z);
                             isMovingTowardsCenter = true;
                             pathStack.Push(targetCenterPosition);
-                            i = 4;
+                            i = 5;
                             isGoingBack = false;
+                            Debug.Log("Left Added");
                         }
                         else
                         {
-                            Debug.Log("Ray hit else");
+                            Debug.Log("3");
                         }
                     }
                     break;
@@ -191,7 +266,6 @@ public class AIDepthFirst : MonoBehaviour
                     rayRotation = Quaternion.Euler(0, 0, -rayAngle);
                     rayDirection = rayRotation * Vector3.right;
                     ray = new Ray(transform.position, rayDirection);
-                    Debug.DrawRay(transform.position, rayDirection, Color.red);
                     if (Physics.Raycast(ray, out hit, maxDistance))
                     {
                         if (hit.collider.gameObject.name == "Cube" && hit.collider.gameObject.transform.parent.name == "Ground" && !CheckVisited(hit.collider.gameObject.transform.position))
@@ -201,11 +275,13 @@ public class AIDepthFirst : MonoBehaviour
                             targetCenterPosition = new Vector3(hitObjectTransform.position.x, transform.position.y, hitObjectTransform.position.z);
                             isMovingTowardsCenter = true;
                             pathStack.Push(targetCenterPosition);
-                            i = 4;
+                            i = 5;
+                            isGoingBack = false;
+                            Debug.Log("Right Added");
                         }
                         else
                         {
-                            Debug.Log("Ray hit else");
+                            Debug.Log("4");
                             isGoingBack = true;
                             Debug.Log("Going Back!");
                         }
@@ -229,11 +305,6 @@ public class AIDepthFirst : MonoBehaviour
         }
 
         return false;
-    }
-
-    IEnumerator PauseForSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
     }
 }
 
