@@ -578,8 +578,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.58567905, y: 1, z: 0.46070695}
+  m_Center: {x: -0.03893871, y: 0, z: -0.042690635}
 --- !u!114 &7775532943826084120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,6 +764,7 @@ GameObject:
   - component: {fileID: 5836056742524843352}
   - component: {fileID: 2986044144696614459}
   - component: {fileID: 1058414301034120969}
+  - component: {fileID: 8312567018950994648}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -869,6 +870,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c266475d85cb24ebeb7cc954db1763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8312567018950994648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6011322832885168751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3b9c005992e8f4da74d66b28abcb21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 0}
 --- !u!1 &6050482024403541197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,7 +1133,7 @@ GameObject:
   - component: {fileID: 5993744874802031082}
   - component: {fileID: 6399613066299044135}
   m_Layer: 0
-  m_Name: Ending Cell Z Colliderem
+  m_Name: Ending Cell Q-Learning
   m_TagString: EndCell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,6 +19,12 @@ public class SharedData : MonoBehaviour
     }
     static int _y = 3;
 
+    public static float Time
+    {
+        get => _time;
+        set { _time = value; }
+    }
+    static float _time;
     public static bool IsMinimumOn
     {
         get => _isMinimumOn;
