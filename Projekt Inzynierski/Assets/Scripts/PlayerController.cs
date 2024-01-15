@@ -1,14 +1,20 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
+    float _speed;
+    [SerializeField]
+    Rigidbody _playerRigidbody;
+
 
     void Update()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        transform.Translate(move * speed * Time.deltaTime);
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+        _playerRigidbody.MovePosition(transform.position + movement * _speed * Time.fixedDeltaTime);
     }
 }
