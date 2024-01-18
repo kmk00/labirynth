@@ -72,7 +72,7 @@ public class PlayerVSAIMaze : MazeGeneratorBase
         Instantiate(Player, playerPosition, Quaternion.identity, mazeContainer.transform);
 
         
-        Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 20.4f, oppositeCorner.y - _mazeHeight / 2);
+        Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 20.6f, oppositeCorner.y - _mazeHeight / 2);
         Instantiate(AI, aiPosition, Quaternion.identity, copiedMaze.transform);
 
     }
