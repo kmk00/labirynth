@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 482958086}
   - component: {fileID: 482958089}
   - component: {fileID: 482958088}
-  - component: {fileID: 482958087}
+  - component: {fileID: 482958091}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: Untagged
@@ -581,20 +581,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &482958087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482958085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e62a9723104b0c49bb5f9c21fa42bc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  smoothSpeed: 0.125
 --- !u!114 &482958088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +648,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
+--- !u!114 &482958091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482958085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b903db123633cd3469a4094b71b50a58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  smoothSpeed: 0.125
 --- !u!1 &562299151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 1023019808}
   - component: {fileID: 1023019807}
   - component: {fileID: 1023019811}
-  - component: {fileID: 1023019810}
+  - component: {fileID: 1023019812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1131,20 +1131,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
---- !u!114 &1023019810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1023019806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e503e88cdf7154c9e2f6440a5a3316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  smoothSpeed: 0.125
 --- !u!114 &1023019811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,6 +1175,20 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &1023019812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023019806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b903db123633cd3469a4094b71b50a58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  smoothSpeed: 0.125
 --- !u!1 &1616318228
 GameObject:
   m_ObjectHideFlags: 0
