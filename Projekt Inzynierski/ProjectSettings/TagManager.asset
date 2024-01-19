@@ -16,6 +16,7 @@ TagManager:
   - Point
   - Env
   - Agent
+  - EndPoint
   layers:
   - Default
   - TransparentFX

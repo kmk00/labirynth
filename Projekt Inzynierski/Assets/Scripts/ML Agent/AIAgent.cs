@@ -12,6 +12,7 @@ public class AIAgent : Agent
     private Rigidbody rb;
     private List<GameObject> disabledPoints = new List<GameObject>();
     private float pointReactivationTime = 14;
+    private bool isSeeking = true;
 
     public override void Initialize()
     {
@@ -25,11 +26,14 @@ public class AIAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float moveRotate = actions.ContinuousActions[0];
-        float moveForward = actions.ContinuousActions[1];
+        if (isSeeking)
+        {
+            float moveRotate = actions.ContinuousActions[0];
+            float moveForward = actions.ContinuousActions[1];
 
-        rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
-        transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
+            rb.MovePosition(transform.position + transform.forward * moveForward * moveSpeed * Time.deltaTime);
+            transform.Rotate(0f, moveRotate * moveSpeed * 2.5f, 0f, Space.Self);
+        }
     }
 
     public void OnTriggerEnter(Collider other)
@@ -40,6 +44,13 @@ public class AIAgent : Agent
             StartCoroutine(ReactivatePointAfterDelay(other.gameObject, pointReactivationTime));
             other.gameObject.SetActive(false);
         }
+
+        if (other.CompareTag("EndPoint"))
+        {
+            Debug.Log("EndpOint");
+            isSeeking = false;
+        }
+
     }
 
     private IEnumerator ReactivatePointAfterDelay(GameObject point, float delay)

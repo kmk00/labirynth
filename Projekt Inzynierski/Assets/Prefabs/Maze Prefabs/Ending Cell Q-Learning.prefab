@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 7775532943826084120}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: EndPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -882,7 +882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3b9c005992e8f4da74d66b28abcb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 0}
 --- !u!1 &6050482024403541197
 GameObject:
   m_ObjectHideFlags: 0

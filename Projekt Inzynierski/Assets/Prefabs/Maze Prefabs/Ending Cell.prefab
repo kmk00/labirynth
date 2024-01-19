@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 958959139187777337}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Point
+  m_TagString: EndPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -608,7 +608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3b9c005992e8f4da74d66b28abcb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 0}
 --- !u!1 &4427483423771411512
 GameObject:
   m_ObjectHideFlags: 0
