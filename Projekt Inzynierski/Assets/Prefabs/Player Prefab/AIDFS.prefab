@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4813178913034295929}
   - component: {fileID: -8834104503430441586}
   m_Layer: 0
-  m_Name: AIDepthFirst
+  m_Name: AIDFS
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
