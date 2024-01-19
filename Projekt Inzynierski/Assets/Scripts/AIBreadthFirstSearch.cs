@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIBreadthFirstSearch : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 5f;
+    private float speed = 10f;
     bool[,,] visited;
     bool isGoingBack = false;
     bool isEnd = false;
@@ -21,20 +21,15 @@ public class AIBreadthFirstSearch : MonoBehaviour
     private Vector3 targetCenterPosition;
     private Vector3 finalPosition = new Vector3(0, 0, 0);
     public Vector3 start;
-    int noWayCounter = 0;
     float timer = 0f;
     int globalBFS = 0;
-    int maxBFS = 0;
     public Vector3 lastKnownCommon;
     public int lastKnownCommonNumber = 0;
     public Vector3 playerPosition;
 
     Queue<Vector3[]> BFS = new Queue<Vector3[]>();
-    Queue<Vector3> playerBFS = new Queue<Vector3>();
     Queue<Vector3> destination = new Queue<Vector3>();
     Queue<Vector3> returnS = new Queue<Vector3>();
-    Stack<Vector3> destinationStack = new Stack<Vector3>();
-    Stack<Vector3> returnStack = new Stack<Vector3>();
 
 
     void Start()
@@ -103,11 +98,8 @@ public class AIBreadthFirstSearch : MonoBehaviour
         {
             Debug.LogError("Starting Cell(Clone) not found.");
         }
-
-        //PrintVisitedValues();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isPaused == true)
@@ -128,7 +120,6 @@ public class AIBreadthFirstSearch : MonoBehaviour
             {
                 if (isMovingTowardsCenter)
                 {
-                    speed = 5f;
                     float step = speed * Time.deltaTime;
                     transform.position = Vector3.MoveTowards(transform.position, playerPosition, step);
                     if (transform.position == playerPosition)
@@ -145,26 +136,15 @@ public class AIBreadthFirstSearch : MonoBehaviour
                 }
                 else if (movePhase)
                 {
-                    if (destinationPhase) //Je¿eli AI jest równo z ostatnim wspólnym miejscem, to znaczy, ¿e mo¿e wyszukiwaæ drogê do BFS.ElementAt(globalBFS).Last()
+                    if (destinationPhase)
                     {
-                        //Debug.Log("Idê");
-                        //Debug.Log("Last Known Common: " + lastKnownCommon);
-                        //Debug.Log("Last Known Common Number: " + lastKnownCommonNumber);
-                        //Debug.Log("Player Position: " + playerPosition);
-                        //lastKnownCommonNumber = BFS.ElementAt(lastKnownCommonNumber).Length-1;
 
                         if (destination.Count > 0)
                         {
-                            //Debug.Log("Ide do: " + destinationStack.Peek());
-                            //playerPosition = destinationStack.Pop();
                             playerPosition = destination.Dequeue();
                             returnS.Enqueue(playerPosition);
                             isMovingTowardsCenter = true;
                         }
-
-                        //Debug.Log("Nastêpny: " + destinationStack.Peek());
-                        //lastKnownCommon = playerPosition;
-
                         else if (destination.Count == 0)
                         {
                             RemoveDuplicatesFromReturnS();
@@ -175,16 +155,8 @@ public class AIBreadthFirstSearch : MonoBehaviour
                     }
                     else if (goBackPhase && !isGoingBack)
                     {
-                        //CheckLastKnownCommon();
-                        //Debug.Log("Cofam");
-                        //Debug.Log("Last Known Common: " + lastKnownCommon);
-                        //Debug.Log("Last Known Common Number: " + lastKnownCommonNumber);
-                        //Debug.Log("Player Position: " + playerPosition);
-                        //Debug.Log("Cofam do: " + returnS.Peek());
                         if (playerPosition != start)
                         {
-                            // Debug.Log("Cofam do: " + returnS.Peek());
-                            //ReverseReturnS();
                             RemoveDuplicatesFromReturnS();
                             Debug.Log("ReturnS:");
                             foreach (Vector3 vector in returnS)
@@ -208,8 +180,6 @@ public class AIBreadthFirstSearch : MonoBehaviour
                                 destination.Enqueue(vector);
                                 Debug.Log(vector);
                             }
-                            //destinationStack = CheckNextDestination();
-                            //returnS.Enqueue(start);
                             Debug.Log("GlobalBFS = " + globalBFS);
                         }
                     }
@@ -220,18 +190,6 @@ public class AIBreadthFirstSearch : MonoBehaviour
                     {
 
                         FindAllWays();
-
-                        /*foreach (Vector3 vector in BFS.ElementAt(globalBFS))
-                        {
-                            //playerBFS.Enqueue(vector);
-                            Debug.Log(globalBFS + " + " + vector);
-                        }
-                        foreach (Vector3 vector in BFS.ElementAt(globalBFS+1))
-                        {
-                            //playerBFS.Enqueue(vector);
-                            Debug.Log(globalBFS+1 + " + " + vector);
-                        }*/
-
                         globalBFS += 1;
                         checkPhase = false;
                         movePhase = true;
@@ -242,19 +200,8 @@ public class AIBreadthFirstSearch : MonoBehaviour
                             foreach (Vector3 vector in BFS.ElementAt(globalBFS))
                             {
                                 destination.Enqueue(vector);
-                                //Debug.Log(vector);
                             }
-                            //destinationStack = CheckNextDestination();
-                            //Debug.Log("GlobalBFS = " + globalBFS);
                         }
-                        //CheckLastKnownCommon();
-                        /*for (int i = 0; i < lastKnownCommonNumber-2; i++)
-                        {
-                            destination.Dequeue();
-                        }*/
-
-
-
                     }
                 }
             }
@@ -281,19 +228,14 @@ public class AIBreadthFirstSearch : MonoBehaviour
     {
         float maxDistance = 2f;
         float rayAngle = 30f;
-        int counter = 0;
         List<Vector3> tempList = new List<Vector3>();
 
         for (int i = 0; i < 4; ++i)
         {
             Quaternion rayRotation = Quaternion.Euler(rayAngle, i * 90f, 0); // Dodaj k¹t do wszystkich promieni
             Vector3 rayDirection = rayRotation * Vector3.forward;
-
             Ray ray = new Ray(transform.position, rayDirection);
-
-            // Dodaj czerwony debugowy promieñ
             Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
-
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
             {
                 if (hit.collider.gameObject.name == "Cube" &&
@@ -307,19 +249,7 @@ public class AIBreadthFirstSearch : MonoBehaviour
                     tempList.Add(targetCenterPosition);
                     BFS.Enqueue(tempList.ToArray());
                     tempList.Clear();
-                    /*foreach (Vector3 vector in BFS.ElementAt(maxBFS))
-                    {
-                        playerBFS.Enqueue(vector);
-                        //Debug.Log(vector);
-                    }*/
-                    maxBFS++;
-                    counter++;
-                    //Debug.Log(maxBFS-counter);
-
-
-
                     isGoingBack = false;
-                    //Debug.Log("Added: " + GetDirectionName(i));
                 }
                 else
                 {
@@ -331,47 +261,26 @@ public class AIBreadthFirstSearch : MonoBehaviour
 
     public void RemoveDuplicatesFromReturnS()
     {
-        // Stwórz now¹ kolejkê, dodaj¹c tylko pierwszy element (start) z oryginalnej kolejki
         Queue<Vector3> newReturnS = new Queue<Vector3>();
         HashSet<Vector3> uniquePositions = new HashSet<Vector3>();
 
         foreach (Vector3 position in returnS)
         {
-            // Dodaj do nowej kolejki, je¿eli pozycja nie istnieje jeszcze w zbiorze
             if (uniquePositions.Add(position))
             {
                 newReturnS.Enqueue(position);
             }
         }
-
-        // Przypisz now¹ kolejkê do returnS
         returnS = newReturnS;
     }
 
     public void ReverseReturnS()
     {
-        // Stwórz tymczasow¹ listê, aby odwróciæ elementy
         List<Vector3> tempList = new List<Vector3>(returnS);
-
-        // Wyczyœæ kolejkê
         returnS.Clear();
-
-        // Dodaj odwrócone elementy z listy z powrotem do kolejki
         for (int i = tempList.Count - 1; i >= 0; i--)
         {
             returnS.Enqueue(tempList[i]);
-        }
-    }
-
-    string GetDirectionName(int direction)
-    {
-        switch (direction)
-        {
-            case 0: return "Forward";
-            case 1: return "Right";
-            case 2: return "Backward";
-            case 3: return "Left";
-            default: return "Unknown";
         }
     }
 

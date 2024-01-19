@@ -52,7 +52,7 @@ public class OnlyMazeGenerator : MazeGeneratorBase
 
         if(environmentParent.name == "AIMaze")
         {
-            Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 0.4f, oppositeCorner.y - _mazeHeight / 2);
+            Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 20.4f, oppositeCorner.y - _mazeHeight / 2);
             Instantiate(AI_Algorithm, aiPosition, Quaternion.identity, environmentParent.transform);
         }
 
