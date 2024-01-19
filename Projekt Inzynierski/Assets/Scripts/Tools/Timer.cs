@@ -17,7 +17,6 @@ public class Timer : MonoBehaviour
 
         timeStart += Time.deltaTime;
         SharedData.Time = timeStart;
-        Debug.Log(SharedData.Time);
     }
 
     private void OnCollisionEnter(Collision collision)

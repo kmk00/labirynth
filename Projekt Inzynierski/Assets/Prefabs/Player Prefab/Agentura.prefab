@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 1379496117558247271}
   - component: {fileID: 8457913948765998324}
   m_Layer: 0
-  m_Name: AIModel
+  m_Name: Agentura
   m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
