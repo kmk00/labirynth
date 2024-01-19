@@ -1336,7 +1336,7 @@ GameObject:
   - component: {fileID: 6110137723446226203}
   - component: {fileID: 3716875270523629470}
   m_Layer: 0
-  m_Name: Ground (1)
+  m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
