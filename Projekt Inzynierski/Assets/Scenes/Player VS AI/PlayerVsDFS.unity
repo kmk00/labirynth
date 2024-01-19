@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae68b6c70bce4745a6fb5ff32bf72b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
   smoothSpeed: 0.125
 --- !u!1 &2072035539
 GameObject:
@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e62a9723104b0c49bb5f9c21fa42bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
   smoothSpeed: 0.125
 --- !u!1001 &8622533404874473638
 PrefabInstance:
@@ -1539,6 +1539,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2220497918617233378, guid: ffc42195cfe8f8144b688ea25f9c1ba4,
         type: 3}
+    - target: {fileID: 4062038111279980996, guid: f45c13702bc219b47aba23e14c8427ae,
+        type: 3}
+      propertyPath: _cameraAI
+      value: 
+      objectReference: {fileID: 1748797596}
+    - target: {fileID: 4062038111279980996, guid: f45c13702bc219b47aba23e14c8427ae,
+        type: 3}
+      propertyPath: _cameraPlayer
+      value: 
+      objectReference: {fileID: 2072035542}
     - target: {fileID: 8696858209749503200, guid: f45c13702bc219b47aba23e14c8427ae,
         type: 3}
       propertyPath: m_Name

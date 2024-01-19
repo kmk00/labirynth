@@ -188,6 +188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8390170899330150334, guid: b3bf7bdd285aff749bda3630cfbc9392,
         type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 1239787559}
+    - target: {fileID: 8390170899330150334, guid: b3bf7bdd285aff749bda3630cfbc9392,
+        type: 3}
       propertyPath: _endCell
       value: 
       objectReference: {fileID: 2991217529360941613, guid: 95291f4907b718a4f80816ec11469daa,
@@ -1016,7 +1021,6 @@ GameObject:
   - component: {fileID: 1239787558}
   - component: {fileID: 1239787557}
   - component: {fileID: 1239787561}
-  - component: {fileID: 1239787562}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1136,7 +1140,7 @@ Transform:
   m_GameObject: {fileID: 1239787556}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 412, z: -73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1154,19 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b903db123633cd3469a4094b71b50a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1239787562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239787556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae68b6c70bce4745a6fb5ff32bf72b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
   smoothSpeed: 0.125
 --- !u!1 &1245200692
 GameObject:

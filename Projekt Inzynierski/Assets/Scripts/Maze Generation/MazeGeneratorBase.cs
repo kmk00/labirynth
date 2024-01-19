@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,25 +25,15 @@ public abstract class MazeGeneratorBase : MonoBehaviour
         foreach (Transform child in parent.transform)
         {
             if (i == 0 && child.gameObject.name == "Left Wall")
-            {
                 child.gameObject.tag = "OutsideWall";
-            }
             if (i == 0 && child.gameObject.name == "Front Wall")
-            {
                 child.gameObject.tag = "OutsideWall";
-            }
             if (j == 0 && child.gameObject.name == "Back Wall")
-            {
                 child.gameObject.tag = "OutsideWall";
-            }
             if (i == _mazeWidth - 1 && child.gameObject.name == "Right Wall")
-            {
                 child.gameObject.tag = "OutsideWall";
-            }
             if (j == _mazeHeight - 1 && child.gameObject.name == "Front Wall")
-            {
                 child.gameObject.tag = "OutsideWall";
-            }
         }
     }
 

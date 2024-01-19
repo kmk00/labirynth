@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e62a9723104b0c49bb5f9c21fa42bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
   smoothSpeed: 0.125
 --- !u!114 &482958088
 MonoBehaviour:
@@ -794,6 +794,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2220497918617233378, guid: 43984f46828bdcd499c836cf84afec06,
         type: 3}
+    - target: {fileID: 4062038111279980996, guid: f45c13702bc219b47aba23e14c8427ae,
+        type: 3}
+      propertyPath: _cameraAI
+      value: 
+      objectReference: {fileID: 1023019808}
+    - target: {fileID: 4062038111279980996, guid: f45c13702bc219b47aba23e14c8427ae,
+        type: 3}
+      propertyPath: _cameraPlayer
+      value: 
+      objectReference: {fileID: 482958086}
     - target: {fileID: 8696858209749503200, guid: f45c13702bc219b47aba23e14c8427ae,
         type: 3}
       propertyPath: m_Name
@@ -1133,7 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e503e88cdf7154c9e2f6440a5a3316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
   smoothSpeed: 0.125
 --- !u!114 &1023019811
 MonoBehaviour:

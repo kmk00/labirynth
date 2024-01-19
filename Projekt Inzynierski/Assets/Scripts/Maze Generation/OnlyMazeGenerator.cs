@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class OnlyMazeGenerator : MazeGeneratorBase
@@ -9,10 +7,13 @@ public class OnlyMazeGenerator : MazeGeneratorBase
 
     private GameObject environmentParent;
 
-
+    [SerializeField]
+    private Camera _camera;
+    private CameraScript _cameraScript;
+    private GameObject _ai;
 
     void Start()
-    {
+    {        
 
         if(SharedData.IsMinimumOn)
         {
@@ -52,8 +53,10 @@ public class OnlyMazeGenerator : MazeGeneratorBase
 
         if(environmentParent.name == "AIMaze")
         {
+            _cameraScript = _camera.GetComponent<CameraScript>();
             Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 20.4f, oppositeCorner.y - _mazeHeight / 2);
-            Instantiate(AI_Algorithm, aiPosition, Quaternion.identity, environmentParent.transform);
+            _ai = Instantiate(AI_Algorithm, aiPosition, Quaternion.identity, environmentParent.transform);
+            _cameraScript.Target = _ai.transform;
         }
 
 

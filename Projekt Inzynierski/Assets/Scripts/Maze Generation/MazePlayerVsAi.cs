@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerVSAIMaze : MazeGeneratorBase
@@ -15,7 +12,17 @@ public class PlayerVSAIMaze : MazeGeneratorBase
 
     private GameObject copiedMaze;
 
+    [SerializeField]
+    private Camera _cameraAI;
 
+    [SerializeField]
+    private Camera _cameraPlayer;
+
+    private CameraScript _cameraScriptAI;
+    private CameraScript _cameraScriptPlayer;
+
+    private GameObject _aiObject;
+    private GameObject _playerObject;
 
 
     void Start()
@@ -68,13 +75,17 @@ public class PlayerVSAIMaze : MazeGeneratorBase
 
     private void PlacePlayerAndAI(Vector2Int oppositeCorner)
     {
+        _cameraScriptPlayer = _cameraPlayer.GetComponent<CameraScript>();
+
         Vector3 playerPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, .4f, oppositeCorner.y - _mazeHeight / 2);
-        Instantiate(Player, playerPosition, Quaternion.identity, mazeContainer.transform);
+        _playerObject = Instantiate(Player, playerPosition, Quaternion.identity, mazeContainer.transform);
+        _cameraScriptPlayer.Target = _playerObject.transform;
 
-        
+        _cameraScriptAI = _cameraAI.GetComponent<CameraScript>();
+
         Vector3 aiPosition = new Vector3(oppositeCorner.x - _mazeWidth / 2, 20.6f, oppositeCorner.y - _mazeHeight / 2);
-        Instantiate(AI, aiPosition, Quaternion.identity, copiedMaze.transform);
-
+        _aiObject = Instantiate(AI, aiPosition, Quaternion.identity, copiedMaze.transform);
+        _cameraScriptAI.Target = _aiObject.transform;
     }
 
     public GameObject CopyMaze()

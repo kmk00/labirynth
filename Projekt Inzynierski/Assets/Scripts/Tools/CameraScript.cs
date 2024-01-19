@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public abstract class CameraScript : MonoBehaviour
+public class CameraScript : MonoBehaviour
 {
-    public Transform target; 
+    public Transform Target; 
     public float smoothSpeed = 0.125f;
-
+    Vector3 upCamera = new Vector3(0, 8.0f, 0);
     void LateUpdate()
     {
-        if (target != null)
+        if (Target != null)
         {
-            Vector3 desiredPosition = target.position + new Vector3(0, 8.0f, 0); 
+            Vector3 desiredPosition = Target.position + upCamera; 
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
             transform.position = smoothedPosition;
         }
