@@ -87,7 +87,7 @@ public class AIBreadthFirstSearch : MonoBehaviour
             if (groundTransform != null)
             {
                 Vector3 groundPosition = groundTransform.position;
-                start = new Vector3(groundPosition.x, 0.6f, groundPosition.z);
+                start = new Vector3(groundPosition.x, 20.6f, groundPosition.z);
                 BFS.Enqueue(new Vector3[] { start });
                 visited[(int)start.x + maxX, (int)start.y + maxY, (int)start.z + maxZ] = true;
                 playerPosition = start;
