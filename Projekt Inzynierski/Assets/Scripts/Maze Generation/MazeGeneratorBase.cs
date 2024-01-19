@@ -49,9 +49,8 @@ public abstract class MazeGeneratorBase : MonoBehaviour
             nextCell = GetNextUnvisitedCell(currentCell);
 
             if (nextCell != null)
-            {
                 GenerateMaze(currentCell, nextCell);
-            }
+
         } while (nextCell != null);
     }
 
@@ -71,45 +70,35 @@ public abstract class MazeGeneratorBase : MonoBehaviour
         {
             var cellToRight = _mazeGrid[x + 1, z];
             if (!cellToRight.IsVisited)
-            {
                 yield return cellToRight;
-            }
         }
 
         if (x - 1 >= 0)
         {
             var cellToLeft = _mazeGrid[x - 1, z];
             if (!cellToLeft.IsVisited)
-            {
                 yield return cellToLeft;
-            }
         }
 
         if (z + 1 < _mazeHeight)
         {
             var cellToFront = _mazeGrid[x, z + 1];
             if (!cellToFront.IsVisited)
-            {
                 yield return cellToFront;
-            }
         }
 
         if (z - 1 >= 0)
         {
             var cellToBack = _mazeGrid[x, z - 1];
             if (!cellToBack.IsVisited)
-            {
                 yield return cellToBack;
-            }
         }
     }
 
     private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
         if (previousCell == null)
-        {
             return;
-        }
 
         Vector3 prevLocalPos = previousCell.transform.localPosition;
         Vector3 currLocalPos = currentCell.transform.localPosition;
