@@ -31,7 +31,12 @@ public class SharedData : MonoBehaviour
         set { _isMinimumOn = value; }
     }
     static bool _isMinimumOn;
-
+    public static string Winner
+    {
+        get => _winner;
+        set { _winner = value; }
+    }
+    static string _winner;
     public static SharedData Instance
     {
         get
