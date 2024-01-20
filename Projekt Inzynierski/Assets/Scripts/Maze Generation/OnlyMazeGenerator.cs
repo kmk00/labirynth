@@ -35,8 +35,8 @@ public class OnlyMazeGenerator : MazeGeneratorBase
             new Vector2Int(_mazeWidth - 1, _mazeHeight - 1)
         };
 
-        Vector2Int selectedCorner = corners[Random.Range(0, corners.Length)]; // Destination Corner
-        Vector2Int oppositeCorner = new Vector2Int(_mazeWidth - 1 - selectedCorner.x, _mazeHeight - 1 - selectedCorner.y); //Player Spawn Corner
+        Vector2Int selectedCorner = corners[Random.Range(0, corners.Length)];
+        Vector2Int oppositeCorner = new Vector2Int(_mazeWidth - 1 - selectedCorner.x, _mazeHeight - 1 - selectedCorner.y);
 
         environmentParent = transform.parent.gameObject;
 

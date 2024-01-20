@@ -186,7 +186,7 @@ public class AIBreadthFirstSearch : MonoBehaviour
                 }
                 else if (checkPhase)
                 {
-                    if (Mathf.Approximately(0f, GetComponent<Rigidbody>().velocity.sqrMagnitude)) //Je¿eli nie rusza siê
+                    if (Mathf.Approximately(0f, GetComponent<Rigidbody>().velocity.sqrMagnitude))
                     {
 
                         FindAllWays();
@@ -218,7 +218,6 @@ public class AIBreadthFirstSearch : MonoBehaviour
         Stack<Vector3> pathStack = new Stack<Vector3>();
         while (destination.Count > 0)
         {
-            //Debug.Log("Stack: " + destination.Peek());
             pathStack.Push(destination.Dequeue());
         }
         return pathStack;
@@ -232,7 +231,7 @@ public class AIBreadthFirstSearch : MonoBehaviour
 
         for (int i = 0; i < 4; ++i)
         {
-            Quaternion rayRotation = Quaternion.Euler(rayAngle, i * 90f, 0); // Dodaj k¹t do wszystkich promieni
+            Quaternion rayRotation = Quaternion.Euler(rayAngle, i * 90f, 0);
             Vector3 rayDirection = rayRotation * Vector3.forward;
             Ray ray = new Ray(transform.position, rayDirection);
             Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
@@ -250,10 +249,6 @@ public class AIBreadthFirstSearch : MonoBehaviour
                     BFS.Enqueue(tempList.ToArray());
                     tempList.Clear();
                     isGoingBack = false;
-                }
-                else
-                {
-                    //Debug.Log("Not Added: " + i);
                 }
             }
         }
